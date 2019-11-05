@@ -16,21 +16,34 @@ Dlinklist::Dlinklist()
 
 Dlinklist::Dlinklist(string data)
 {
-    addNode(data);
+    addNodeBack(data);
 }
 
-void Dlinklist::addNode(string data)
+void Dlinklist::addNodeBack(string data) // insert a node at the end of the list
 {
     DNode *temp;
+    DNode *Position = head;
     if(head == nullptr && tail == nullptr)
     {
-        temp = new DNode();
-        temp->data_ = data;
-        temp->next_ = nullptr;
-        head = temp;
-        tail = temp;
-        size_++;
+        temp = new DNode(); //create a temporary new node 
+        temp->data_ = data; //set that temp node with a data value
+        temp->next_ = nullptr; // the new node points to nothing
+        temp->prev_ = nullptr;
+        head = temp; // set the temp variable as the head of the node 
+        tail = temp; // tail also the head since the list only have one node
+        size_ = 1; // size is now 1;
     }
+    else
+    {
+        while(Position->next_ != nullptr){
+            Position = Position->next_;     
+        }
+        Position->next_ = new DNode();
+        Position = Position->next_;
+        Position->data_ = data;
+        Position->next_ = nullptr;
+    }
+    
 }
 
 bool Dlinklist::isEmpty() {

@@ -24,6 +24,10 @@ public:
     bool isEmpty() const;
     void displayList() const;
     string getNodeValue(size_t) const;
+    int search(string) const;
+    void remove(int pos);
+    bool isMember(string);
+    void insert(string, int);
 };
 
 

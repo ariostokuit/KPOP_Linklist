@@ -1,6 +1,6 @@
 /*
 *
-* This header file include DLinklist.cpp contains
+*  This header file include DLinklist.cpp contains
 *  a  class and struct to implement the double link lists
 *
 */
@@ -24,7 +24,8 @@ private:
 public:
     Dlinklist();
     Dlinklist(string);
-    void addNode(string);
+    void addNodeBack(string);
+    void addNodeFront(string); 
     void removeNode();
     string getNodeData();
     void displayList();

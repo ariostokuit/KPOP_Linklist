@@ -1,6 +1,5 @@
-#include <iostream>
-#include <string>
-#include "SLinklist.h"
+
+#include "Slinklist.h"
 using namespace std;
 
 
@@ -49,10 +48,20 @@ bool Slinklist::isEmpty() const{
         return false; 
 }
 
+/*
+* getSize() returns the size of the list
+*
+*/
 size_t Slinklist::getSize() const{
     return size_;
 }
 
+
+/*
+* getNodeValue(size_t inputted_index) const will tranversed the list
+* a number of times the user inputted.
+*
+*/
 string Slinklist::getNodeValue(size_t inputted_index) const{
     size_t index = 0;
     string result;
@@ -129,8 +138,8 @@ void Slinklist::deleteNode(){
         SNode *previousNode;
         if(getSize() == 1)
         {
-            delete nodePosition;
-            --size_;
+            delete nodePosition; //delete the only node in the list
+            --size_; //size is now 0
         }
         while(nodePosition->next != nullptr)
         {
@@ -139,6 +148,97 @@ void Slinklist::deleteNode(){
         }   
         previousNode->next = nodePosition->next;
         delete nodePosition;
-        --size_;
+        --size_; //reduce size;
     }
 }
+
+
+/*
+* search(string input) const will search for the user inputed value 
+* it will start from position 0 and tranversed the list until 
+* desired value is found. If the user input does not exist in the 
+* node then return -1
+*/
+int Slinklist::search(string input) const {
+   
+   SNode *NodePosition = head;
+   int index = 0;
+
+    //return nullptr if list is empty
+   if(head == nullptr){ 
+       cout << "Error: cannot search with an empty linklist\n";
+       return -1;
+   }
+
+    while(NodePosition != nullptr || index < getSize()){ //transversed through the loop
+        if(NodePosition->data_ == input){
+            return index;
+        }
+        else
+        {
+            index++;
+            NodePosition = NodePosition->next;
+        }
+    }
+    return -1; //if member is not found
+}
+
+/*
+* remove(int pos) will remove the node in the 
+* list by argument value of position
+*
+*/
+void Slinklist::remove(int pos){
+
+    //return nothing if unable to remove node in list
+    if(isEmpty() || pos > getSize() - 1){
+        cout << "Error: Cannot remove node if position is greater than size of list\n";
+        return;
+    }
+
+    SNode *prevNode = head; 
+    SNode *Pos = head->next;
+
+    if(pos == 0){
+        delete prevNode;
+        head = head->next;
+    }
+    else if(pos == 1){
+        prevNode->next = Pos->next;
+        delete Pos;
+    }
+    else{
+        int index = 0;
+        while(index < pos)
+        {
+            prevNode = Pos;
+            Pos = Pos->next;
+        }
+
+    }
+    
+}
+
+/*
+* bool isMember(string member) is a function that 
+* checks if the input argument is a member of the list 
+* 
+*/
+bool Slinklist::isMember(string member){
+    SNode *pos = head;  //start at the beginning of the list
+
+    if(head == nullptr)
+    {
+        cout << "Error: List is empty\n";
+        return false;
+    }
+
+    while(pos != nullptr){
+        if(pos->data_ == member){
+            return true;
+        }
+        pos = pos->next;
+    }
+    return false;
+}
+
