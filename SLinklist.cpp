@@ -278,13 +278,16 @@ void Slinklist::insert(string value, int pos)
         prevNode = head;
         currentNode = head->next;
         int index = 1;
-        while(index<pos && currentNode != nullptr){
+        while(index < pos && currentNode != nullptr){
             prevNode = currentNode;
             currentNode = currentNode->next;
             ++index;
         }
-
-
+        prevNode->next = new SNode();
+        prevNode->next->data_ = value;
+        prevNode = prevNode->next;
+        prevNode->next = currentNode; 
+        ++size_;
     }
 
 }

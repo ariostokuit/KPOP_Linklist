@@ -75,7 +75,12 @@ int main(){
     cout << "Daniel Kang position is " << RedVelvet.search("Daniel Kang") << endl;
 
     //Demonstrate the insert position function
-   // RedVelvet.insert("Naomi",0);
+    RedVelvet.insert("Naomi",0);
+    RedVelvet.displayList();
+    RedVelvet.remove(0);
+    RedVelvet.remove(2);
+    RedVelvet.displayList();
+    RedVelvet.insert("Yeri",2);
     RedVelvet.displayList();
 
 
