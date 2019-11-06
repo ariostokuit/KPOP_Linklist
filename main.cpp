@@ -30,17 +30,14 @@ int main(){
     Twice.displayList(); //Display the entire group in order
 
     //testing isEmpty() function , desired result is false
-    if(Twice.isEmpty()){
-        cout << "Twice List is empty\n";
-    }
-    else
-    {
+    if(Twice.isEmpty()){ cout << "Twice List is empty\n";}
+    else 
         cout << "Twice list is not empty\n";
-    }
     
     Twice.addNode("ChungLi");
     Twice.addNode("David");
     Twice.displayList();
+
     Twice.deleteNode(); //test deleteNode
     Twice.deleteNode(); //test again
     Twice.displayList();
@@ -55,6 +52,7 @@ int main(){
     Twice.remove(3); //testing remove function
     Twice.displayList(); 
     Twice.addNode("Tzuyu");
+
     cout << "Searching for Momo in the list\n\n";
 
     //Testing isMember function

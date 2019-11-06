@@ -14,7 +14,6 @@ Slinklist::Slinklist(string data){ addNode(data);}
 
 /*
 * Slinklist::addNode(double value) will add a new node to the linklist
-*
 */
 void Slinklist::addNode(string data){
    //if the list is empty create one node and set it as head of list
@@ -36,10 +35,12 @@ void Slinklist::addNode(string data){
         ++size_; //size of link list increased by 1
     }
 }
-/*
+
+
+/******************************************************
 * bool isEmpty() test whether or not if the linklist
 * is empty or not 
-*/
+********************************************************/
 bool Slinklist::isEmpty() const{
     if(size_ == 0){
         return true; //linklist is empty 
@@ -48,20 +49,17 @@ bool Slinklist::isEmpty() const{
         return false; 
 }
 
-/*
+/********************************************
 * getSize() returns the size of the list
-*
-*/
-size_t Slinklist::getSize() const{
-    return size_;
-}
+**********************************************/
+size_t Slinklist::getSize() const{ return size_;}
 
 
-/*
+/**********************************************************************
 * getNodeValue(size_t inputted_index) const will tranversed the list
 * a number of times the user inputted.
 *
-*/
+*************************************************************************/
 string Slinklist::getNodeValue(size_t inputted_index) const{
     size_t index = 0;
     string result;
@@ -152,42 +150,10 @@ void Slinklist::deleteNode(){
     }
 }
 
-
-/*
-* search(string input) const will search for the user inputed value 
-* it will start from position 0 and tranversed the list until 
-* desired value is found. If the user input does not exist in the 
-* node then return -1
-*/
-int Slinklist::search(string input) const {
-   
-   SNode *NodePosition = head;
-   int index = 0;
-
-    //return nullptr if list is empty
-   if(head == nullptr){ 
-       cout << "Error: cannot search with an empty linklist\n";
-       return -1;
-   }
-
-    while(NodePosition != nullptr || index < getSize()){ //transversed through the loop
-        if(NodePosition->data_ == input){
-            return index;
-        }
-        else
-        {
-            index++;
-            NodePosition = NodePosition->next;
-        }
-    }
-    return -1; //if member is not found
-}
-
-/*
+/*********************************************
 * remove(int pos) will remove the node in the 
 * list by argument value of position
-*
-*/
+***********************************************/
 void Slinklist::remove(int pos){
 
     //return nothing if unable to remove node in list
@@ -224,6 +190,36 @@ void Slinklist::remove(int pos){
         --size_;
     }
     
+}
+
+/*
+* search(string input) const will search for the user inputed value 
+* it will start from position 0 and tranversed the list until 
+* desired value is found. If the user input does not exist in the 
+* node then return -1
+*/
+int Slinklist::search(string input) const {
+   
+   SNode *NodePosition = head;
+   int index = 0;
+
+    //return nullptr if list is empty
+   if(head == nullptr){ 
+       cout << "Error: cannot search with an empty linklist\n";
+       return -1;
+   }
+
+    while(NodePosition != nullptr || index < getSize()){ //transversed through the loop
+        if(NodePosition->data_ == input){
+            return index;
+        }
+        else
+        {
+            index++;
+            NodePosition = NodePosition->next;
+        }
+    }
+    return -1; //if member is not found
 }
 
 /*
