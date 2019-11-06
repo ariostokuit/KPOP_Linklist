@@ -49,8 +49,18 @@ int main(){
     Twice.displayList();
     Twice.remove(1); //remove the second member of the list
     Twice.displayList();
-    Twice.addNode("Momo"); //readd the deleted members
+    Twice.addNode("Momo"); //return the deleted members
     Twice.addNode("Sana");
+    Twice.displayList(); 
+    Twice.remove(3); //testing remove function
+    Twice.displayList(); 
+    Twice.addNode("Tzuyu");
+    cout << "Searching for Momo in the list\n\n";
+
+    //Testing isMember function
+    if(Twice.isMember("Momo")){
+        cout << "Momo is a member of Twice\n";
+    }
 
     //Demonstrate a single List with a program defined constructor
     Slinklist RedVelvet("Joy");
@@ -60,9 +70,13 @@ int main(){
     RedVelvet.addNode("Wendy");
     RedVelvet.displayList();
     cout << "Now searching for Seulgi.....\n\n\n";
-    cout << "Seulgi position of the list is: " << RedVelvet.search("Seulgi") << endl;
+    cout << "Seulgi position of the list is: " << RedVelvet.search("Seulgi") << endl; //testing the search position function
     cout << "Now searching for Daniel Kang\n";
     cout << "Daniel Kang position is " << RedVelvet.search("Daniel Kang") << endl;
+
+    //Demonstrate the insert position function
+   // RedVelvet.insert("Naomi",0);
+    RedVelvet.displayList();
 
 
 

@@ -202,19 +202,26 @@ void Slinklist::remove(int pos){
     if(pos == 0){
         delete prevNode;
         head = head->next;
+        --size_;
     }
     else if(pos == 1){
         prevNode->next = Pos->next;
         delete Pos;
+        --size_;
     }
     else{
+        Pos = head;
+
         int index = 0;
-        while(index < pos)
+        while(Pos != nullptr && index < pos)
         {
             prevNode = Pos;
             Pos = Pos->next;
+            ++index;
         }
-
+        prevNode->next = Pos->next;
+        delete prevNode;
+        --size_;
     }
     
 }
@@ -242,3 +249,42 @@ bool Slinklist::isMember(string member){
     return false;
 }
 
+void Slinklist::insert(string value, int pos)
+{
+    SNode *prevNode, *currentNode;
+
+    if(isEmpty()){
+        cout << "Error, cannot insert Node at an empty list\n";
+        return;
+    }
+    if(pos < 0){
+        cout << "Error, cannot insert at a negative position\n";
+    }
+
+    if(pos == 0){
+        currentNode = head;
+        head = nullptr;
+        head = new SNode();
+        head->data_ = value;
+        head->next = currentNode;
+        ++size_;
+    }
+    else if(pos >= getSize())
+    {
+       addNode(value); //insert Node at the end of the list if the position argument is greater than the size of the list
+    }
+    else
+    {
+        prevNode = head;
+        currentNode = head->next;
+        int index = 1;
+        while(index<pos && currentNode != nullptr){
+            prevNode = currentNode;
+            currentNode = currentNode->next;
+            ++index;
+        }
+
+
+    }
+
+}
