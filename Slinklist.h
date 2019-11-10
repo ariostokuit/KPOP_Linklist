@@ -18,6 +18,7 @@ private:
 public:
     Slinklist();
     Slinklist(string);
+    ~Slinklist();
     void addNode(string);
     void deleteNode();
     size_t getSize() const;

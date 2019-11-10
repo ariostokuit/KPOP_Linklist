@@ -13,9 +13,8 @@ using namespace std;
 
 int main(){
 
-    Slinklist Twice; //start with empty list
-
-    
+    Slinklist Twice; //start with empty list of KPOP group Twice
+  
     //Testing Single Linklist by adding all the members of Twice
     Twice.addNode("Momo");
     Twice.addNode("Chaeyoung");
@@ -25,68 +24,71 @@ int main(){
     Twice.addNode("Tzuyu");
     Twice.addNode("DaHyun");
     Twice.addNode("Nayeon");
+    Twice.deleteNode();
+    Twice.deleteNode();
+    Twice.addNode("DaHyun");
+    Twice.addNode("Nayeon");
+
+    //Now Display all of the members of Twice;
+    Twice.displayList();
+
+    //Now testing getNodeValue(size_t index = 2)
+    cout << endl << "Position 2 of Twice List is " << Twice.getNodeValue(2) << endl << endl; 
    
-    cout << "Here are the members of Twice: ";
-    Twice.displayList(); //Display the entire group in order
-
-    //testing isEmpty() function , desired result is false
-    if(Twice.isEmpty()){ cout << "Twice List is empty\n";}
-    else 
-        cout << "Twice list is not empty\n";
+    //Testing isMember() function
+    cout << "Testing isMember() function with Mina\n";
+    if(Twice.isMember("Mina"))
+    {
+        cout << "Yes, Mina is a member of Twice\n\n";
+    } 
     
-    Twice.addNode("ChungLi");
-    Twice.addNode("David");
+    //Testing remove(0) which should be momo
+    cout << "Removing MOMO from Twice....\n\n"; 
+    Twice.remove(0);
+    Twice.displayList();
+    cout << "Removing Mina from Twice\n\n";
+    Twice.remove(4);
+    Twice.displayList();
+    Twice.addNode("Momo");
     Twice.displayList();
 
-    Twice.deleteNode(); //test deleteNode
-    Twice.deleteNode(); //test again
+    //Testing insert() function 
+    Twice.insert("Momo",3);
     Twice.displayList();
 
-    Twice.remove(0); //remove the first member of the list which is Momo;
-    Twice.displayList();
-    Twice.remove(1); //remove the second member of the list
-    Twice.displayList();
-    Twice.addNode("Momo"); //return the deleted members
-    Twice.addNode("Sana");
-    Twice.displayList(); 
-    Twice.remove(3); //testing remove function
-    Twice.displayList(); 
-    Twice.addNode("Tzuyu");
-
-    cout << "Searching for Momo in the list\n\n";
-
-    //Testing isMember function
-    if(Twice.isMember("Momo")){
-        cout << "Momo is a member of Twice\n";
-    }
-
-    //Demonstrate a single List with a program defined constructor
-    Slinklist RedVelvet("Joy");
-    RedVelvet.addNode("Irene");
-    RedVelvet.addNode("Yeri");
-    RedVelvet.addNode("Seulgi");
-    RedVelvet.addNode("Wendy");
-    RedVelvet.displayList();
-    cout << "Now searching for Seulgi.....\n\n\n";
-    cout << "Seulgi position of the list is: " << RedVelvet.search("Seulgi") << endl; //testing the search position function
-    cout << "Now searching for Daniel Kang\n";
-    cout << "Daniel Kang position is " << RedVelvet.search("Daniel Kang") << endl;
-
-    //Demonstrate the insert position function
-    RedVelvet.insert("Naomi",0);
-    RedVelvet.displayList();
-    RedVelvet.remove(0);
-    RedVelvet.remove(2);
-    RedVelvet.displayList();
-    RedVelvet.insert("Yeri",2);
-    RedVelvet.displayList();
 
 
+    /**********************************DOUBLE LINKLIST***************************/
+    Dlinklist Got7;
 
-    //Demonstrationg of a double Link List with a defauly constructor
-    Dlinklist BTS("JHope");
-    Dlinklist BTS1("Jimin");
-    BTS.displayList();
-    BTS1.displayList();
+    //Testing adding Node at the head and at the tail of the list
+    Got7.addNodeBack("Jackson Wang");
+    Got7.addNodeBack("JB");
+    Got7.addNodeBack("Mark Tuan");
+    Got7.addNodeFront("Bam Bam");
+    Got7.addNodeFront("Park Jin Young");
+    Got7.addNodeFront("Kim Yugyeom");
+    Got7.addNodeFront("Choi Yungjae");
+    Got7.displayList();
+
+    //Testing getNodeData() 
+    cout << "Position 2 of the list is " << Got7.getNodeData(2) << endl; 
+    cout << "Position 3 of the list is " << Got7.getNodeData(3) << endl;
+    
+    
+    cout << "Printing out the Got 7 list backwards.....\n\n";
+    Got7.RdisplayList();
+    cout << Got7.findNodeBack("Park Jin Young");
+    cout << Got7.findNodeFront("Jackson Wang");
+    Got7.removeNodeBack();
+    Got7.displayList();
+    Got7.addNodeBack("Mark Tuan");
+    Got7.removeNodeFront();
+    Got7.displayList();
+    Got7.addNodeFront("Choi Yungjae");
+
+
+    
+
     return 0;
 }

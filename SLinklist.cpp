@@ -12,12 +12,27 @@ Slinklist::Slinklist(){ //empty linklist
 //constructor that creates a linklist with one node 
 Slinklist::Slinklist(string data){ addNode(data);}
 
-/*
+/********************************************************
+ * ~Slinklist() will destroy the entire list
+ * 
+ * ***************************************************/
+Slinklist::~Slinklist(){
+    SNode * currentPos = head;//start at the begining of the list
+    while(currentPos != nullptr)
+    {
+        SNode *garbage = currentPos;//garbage keep tracks of node to be deleted
+        currentPos = currentPos->next;//move to the next node
+        delete garbage; //delete garbage node
+    }
+}
+
+
+/*********************************************************************
 * Slinklist::addNode(double value) will add a new node to the linklist
-*/
+***********************************************************************/
 void Slinklist::addNode(string data){
    //if the list is empty create one node and set it as head of list
-    if(head == nullptr){ 
+    if(head==nullptr){ 
         head = new SNode; //head points to the only first node
         head->next = nullptr; //since there is only one node, next points to nothing 
         head->data_ = data; //set the value of the node
@@ -31,7 +46,8 @@ void Slinklist::addNode(string data){
         }
         nodePosition->next = new SNode; //add another node
         nodePosition->next->data_ = data; //new node is set with a parameter value
-        nodePosition->next->next = nullptr; //new node next pointer points to nothing
+        nodePosition = nodePosition->next;
+        nodePosition->next = nullptr;
         ++size_; //size of link list increased by 1
     }
 }
@@ -46,7 +62,7 @@ bool Slinklist::isEmpty() const{
         return true; //linklist is empty 
     }
     else
-        return false; 
+        return false;  //linklist is not empty
 }
 
 /********************************************
@@ -54,11 +70,9 @@ bool Slinklist::isEmpty() const{
 **********************************************/
 size_t Slinklist::getSize() const{ return size_;}
 
-
 /**********************************************************************
 * getNodeValue(size_t inputted_index) const will tranversed the list
 * a number of times the user inputted.
-*
 *************************************************************************/
 string Slinklist::getNodeValue(size_t inputted_index) const{
     size_t index = 0;
@@ -66,19 +80,19 @@ string Slinklist::getNodeValue(size_t inputted_index) const{
     if(isEmpty())
     {
         cout << "Error: cannot get desired node with an empty link list\n";
-        cout << "Returning NULL.....\n";
-        return NULL;
+        cout << "Returning empty string.....\n";
+        return "";
     } //return NULL if list is empty
     if(index > getSize())
     {
         cout << "Error: desired linklist index goes past the current size of link list\n";
-        cout << "Returning NULL......\n";
-        return NULL;
+        cout << "Returning empty string......\n";
+        return "";
     }
-    SNode *nodePosition = head; //start at the head of the list
 
+    SNode *nodePosition = head; //start at the head of the list
     while(nodePosition->next != nullptr){
-        if(index == (inputted_index - 1))
+        if(index == inputted_index)
         {
             result = nodePosition->data_; 
             break;
@@ -93,17 +107,17 @@ string Slinklist::getNodeValue(size_t inputted_index) const{
 }
 
 
-/*
+/***************************************************
 * displayList() displays the entire list of data
 * in the linklist
 *
-*/
+*************************************************/
 void Slinklist::displayList() const{
     SNode *nodePosition = head;
     int index = 0;
 
     if(isEmpty()){
-        cout << "Linklist size" << getSize() << endl;
+        cout << "Singly Linklist size" << getSize() << endl;
         cout << "Linklist is empty\n";
     }
     else{
@@ -123,6 +137,8 @@ void Slinklist::displayList() const{
 * linklist 
 */
 void Slinklist::deleteNode(){
+    SNode *currentNode = head->next; //start at the beginning of the list
+    SNode *prevNode = head;
 
     //return if the link list is empty 
     if(isEmpty())
@@ -130,66 +146,20 @@ void Slinklist::deleteNode(){
         cout << "Unable to delete Node since link list is empty\n";
         return;
     } 
-    else
+    else if(getSize() == 1)
     {
-        SNode *nodePosition = head; //start at the beginning of the list
-        SNode *previousNode;
-        if(getSize() == 1)
-        {
-            delete nodePosition; //delete the only node in the list
-            --size_; //size is now 0
-        }
-        while(nodePosition->next != nullptr)
-        {
-            previousNode = nodePosition;
-            nodePosition = nodePosition->next;
-        }   
-        previousNode->next = nodePosition->next;
-        delete nodePosition;
-        --size_; //reduce size;
+        head = head->next; //head is now the next node
+        delete prevNode; //delete prevNode which contains old head value
+        return; //return out of the function
     }
-}
-
-/*********************************************
-* remove(int pos) will remove the node in the 
-* list by argument value of position
-***********************************************/
-void Slinklist::remove(int pos){
-
-    //return nothing if unable to remove node in list
-    if(isEmpty() || pos > getSize() - 1){
-        cout << "Error: Cannot remove node if position is greater than size of list\n";
-        return;
+    while(currentNode->next != nullptr)
+    {
+        prevNode = currentNode;
+        currentNode = currentNode->next;
     }
-
-    SNode *prevNode = head; 
-    SNode *Pos = head->next;
-
-    if(pos == 0){
-        delete prevNode;
-        head = head->next;
-        --size_;
-    }
-    else if(pos == 1){
-        prevNode->next = Pos->next;
-        delete Pos;
-        --size_;
-    }
-    else{
-        Pos = head;
-
-        int index = 0;
-        while(Pos != nullptr && index < pos)
-        {
-            prevNode = Pos;
-            Pos = Pos->next;
-            ++index;
-        }
-        prevNode->next = Pos->next;
-        delete prevNode;
-        --size_;
-    }
-    
+    delete currentNode;
+    prevNode->next = nullptr;
+    --size_; //reduce size;
 }
 
 /*
@@ -245,45 +215,56 @@ bool Slinklist::isMember(string member){
     return false;
 }
 
-void Slinklist::insert(string value, int pos)
+void Slinklist::remove(int pos)
 {
-    SNode *prevNode, *currentNode;
-
-    if(isEmpty()){
-        cout << "Error, cannot insert Node at an empty list\n";
+    SNode *Position = head->next;
+    SNode *prevPosition = head;
+    if(isEmpty() || pos < 0)
+    {
+        cout << "Error: Cannot remove a node with an empty linklist or a position that is negative\n";
         return;
     }
+    while(pos--)
+    {
+        if(pos == 0)
+        {
+            prevPosition->next = Position->next;
+            delete Position;
+            size_--;
+            return;
+        }
+        else
+        {
+            prevPosition = Position;
+            Position = Position->next;
+        }
+        
+    }
+}
+
+void Slinklist::insert(string data, int pos)
+{
+    SNode *prevNode =head;
+    SNode *currentNode = head->next;
+
     if(pos < 0){
-        cout << "Error, cannot insert at a negative position\n";
+        cout << "Error cannot insert node at negative position\n";
+        return;
     }
 
-    if(pos == 0){
-        currentNode = head;
-        head = nullptr;
-        head = new SNode();
-        head->data_ = value;
-        head->next = currentNode;
-        ++size_;
-    }
-    else if(pos >= getSize())
-    {
-       addNode(value); //insert Node at the end of the list if the position argument is greater than the size of the list
-    }
-    else
-    {
-        prevNode = head;
-        currentNode = head->next;
-        int index = 1;
-        while(index < pos && currentNode != nullptr){
+    while(pos--){
+        if(pos == 0){
+            prevNode->next = new SNode;
+            prevNode->next->data_ = data;
+            prevNode->next->next = currentNode;
+            size_++;
+            return;
+        }
+        else
+        {
             prevNode = currentNode;
             currentNode = currentNode->next;
-            ++index;
         }
-        prevNode->next = new SNode();
-        prevNode->next->data_ = value;
-        prevNode = prevNode->next;
-        prevNode->next = currentNode; 
-        ++size_;
+        
     }
-
 }

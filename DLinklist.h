@@ -13,7 +13,7 @@ using namespace std;
 */
 struct DNode{
     string data_;
-    DNode *next_, *prev_; 
+    DNode *next, *prev; 
 };
 
 class Dlinklist{
@@ -26,12 +26,20 @@ public:
     Dlinklist(string);
     void addNodeBack(string);
     void addNodeFront(string); 
-    void removeNode();
-    string getNodeData();
+    void addNode(string, int);
+    void removeNodeBack();
+    void removeNodeFront();
+    void removeNode(int);
+    string getNodeData(int);
+    int findNodeFront(string);
+    int findNodeBack(string);
     void displayList();
+    void RdisplayList();
     bool isEmpty();
     size_t getSize();
 
+
+    
 };
 
 
